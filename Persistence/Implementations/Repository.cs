@@ -14,6 +14,7 @@ namespace Persistence.Implementations
         protected Repository(DataContext context) {
             Context = context;
         }
+
         public async Task<TEntity> Get(TKey id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
@@ -21,6 +22,14 @@ namespace Persistence.Implementations
         public async Task<IEnumerable<TEntity>> GetAll()
         {
             return await Context.Set<TEntity>().ToListAsync();
+        }
+        public void Add(TEntity entity)
+        {
+            Context.Set<TEntity>().Add(entity);
+        }
+        public void Remove(TEntity entity)
+        {
+            Context.Set<TEntity>().Remove(entity);
         }
     }
 }

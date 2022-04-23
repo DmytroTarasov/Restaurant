@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Persistence.Interfaces
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IAsyncDisposable
     {
         public IDishRepository DishRepository { get; set; }
-        public void Complete();
+        public ICategoryRepository CategoryRepository { get; set; }
+        public Task Complete();
     }
 }

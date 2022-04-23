@@ -10,6 +10,7 @@ namespace Persistence.Interfaces
     {
         public Task<TEntity> Get(TKey id);
         public Task<IEnumerable<TEntity>> GetAll();
-
+        public void Add(TEntity entity);
+        public void Remove(TEntity entity);
     }
 }

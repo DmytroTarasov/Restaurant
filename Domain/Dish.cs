@@ -9,5 +9,6 @@ namespace Domain
     {
         public string Name { get; set; }
         public Category Category { get; set; }
+        public ICollection<Portion> Portions { get; set; } = new List<Portion>();
     }
 }

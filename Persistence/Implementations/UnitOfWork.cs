@@ -11,20 +11,21 @@ namespace Persistence.Implementations
     {
         public DataContext Context { get; }
         public IDishRepository DishRepository { get; set; }
+        public ICategoryRepository CategoryRepository { get; set; }
 
-        public UnitOfWork(DataContext context, IDishRepository dishRepository)
+        public UnitOfWork(DataContext context, IDishRepository dishRepository, ICategoryRepository categoryRepository)
         {
             Context = context;
             DishRepository = dishRepository;
+            CategoryRepository = categoryRepository;
         }
-        public void Complete()
+        public async Task Complete()
         {
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
-
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            Context.Dispose();
+            await Context.DisposeAsync(); // maybe, need a call to GC.SuppressFinalize(this)
         }
     }
 }
