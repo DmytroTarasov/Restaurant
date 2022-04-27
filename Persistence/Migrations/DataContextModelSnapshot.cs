@@ -40,14 +40,35 @@ namespace Persistence.Migrations
                     b.Property<Guid?>("CategoryId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhotoId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("PhotoId");
+
                     b.ToTable("Dishes");
+                });
+
+            modelBuilder.Entity("Domain.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Domain.Portion", b =>
@@ -62,8 +83,8 @@ namespace Persistence.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Size")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -79,7 +100,13 @@ namespace Persistence.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Domain.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId");
+
                     b.Navigation("Category");
+
+                    b.Navigation("Photo");
                 });
 
             modelBuilder.Entity("Domain.Portion", b =>

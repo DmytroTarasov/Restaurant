@@ -8,6 +8,6 @@ namespace Persistence.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category, Guid>
     {
-        
+        public Task<IEnumerable<Dish>> GetAllCategoryDishes(string categoryName);
     }
 }

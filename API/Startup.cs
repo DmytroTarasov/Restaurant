@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Core;
 using Application.Dishes;
+using Application.Interfaces;
 using Domain;
+using Infrastructure.Photos;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,6 +57,8 @@ namespace API
             services.AddScoped<IDishRepository, DishRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.Configure<CloudinarySettings>(_config.GetSection("Cloudinary"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

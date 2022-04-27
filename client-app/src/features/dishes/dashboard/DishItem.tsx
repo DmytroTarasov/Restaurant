@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Item, Segment, Image } from "semantic-ui-react";
+import { Grid, Item, Segment, Image, Icon, Divider, List, Button } from "semantic-ui-react";
 import { Dish } from "../../../app/models/dish";
 
 interface Props {
@@ -11,15 +11,35 @@ export default function DishItem({dish}: Props) {
         <Segment style={{border: '2px solid orange'}}>
             <Grid columns={2} stackable textAlign='justified'>
                 <Grid.Row verticalAlign='middle'>
-                    <Grid.Column width='7'>
-                        <Image size='large' src='/assets/placeholder.png' />
+                    <Grid.Column width='5'>
+                        <Image size='large' src={dish.photo?.url || '/assets/placeholder.png'} />
                     </Grid.Column>
 
-                    <Grid.Column width='9'>
+                    <Grid.Column width='11'>
                     <Item>
                         <Item.Content>
-                            <Item.Header as='h2' style={{color: 'orange'}}>{dish.name}</Item.Header>
-                            <Item.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus facilisis auctor ligula quis euismod. Aliquam erat volutpat. Donec id nibh finibus, vulputate est sit amet, ultrices elit. Phasellus vitae sapien volutpat, elementum justo rutrum, pharetra arcu. Suspendisse potenti. Vivamus mollis urna nec aliquam cursus. Aenean facilisis nunc non purus accumsan.</Item.Description>
+                            <Item.Header as='h2' style={{color: '#a40606'}}>{dish.name}</Item.Header>
+                            <Item.Description>{dish.description}</Item.Description>
+                            <Divider />
+                            <Item.Description>
+                                <Icon name='food' size='big' color='orange' style={{marginRight: '20px'}} />
+                                <List horizontal>
+                                    { dish.portions.map(portion => (
+                                        <List.Item 
+                                            style={{color: 'orange', fontWeight: '600', fontSize: '18px'}} 
+                                            key={portion.id}>
+                                            <List.Content>
+                                                <span style={{marginRight: '10px'}}>{portion.size} &ndash; {portion.price}$ </span>
+                                                <Icon name='shopping cart' size='large' color='orange' style={{marginRight: '10px'}}/>
+                                            </List.Content>
+                                        </List.Item>
+                                    )) }     
+                                </List>
+                                <Button 
+                                    color='brown' 
+                                    floated='right' 
+                                    content='Edit' />        
+                            </Item.Description>
                         </Item.Content>
                     </Item>
                     </Grid.Column>

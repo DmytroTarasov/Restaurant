@@ -1,25 +1,44 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Button, Grid, Header } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+// import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import DishList from './DishList';
+import DishListItemPlaceholder from './DishListItemPlaceholder';
 
 export default observer(function ActivityDashboard() {
-    const {dishStore} = useStore();
-    const {loadingInitial, loadDishes} = dishStore;
+    const {dishStore, categoryStore} = useStore();
+    const {loadingInitial, loadDishes, predicate, cachedDishes} = dishStore;
+    const {loadingCategories} = categoryStore;
 
     useEffect(() => {
-       loadDishes();
-    }, [loadDishes])
+        if (!cachedDishes) loadDishes();
+    }, [loadDishes, cachedDishes])
   
-    if (loadingInitial) return <LoadingComponent content='Loading app...' />
+    if (loadingCategories) return <LoadingComponent content='Loading app...' />
 
     return (
-        // <Grid>
-        //     <Grid.Column width='10'>
-            <DishList />
-        //     </Grid.Column>
-        // </Grid>
+        <Grid>
+            <Grid.Column width='14'>
+            <Header content={predicate.get("categoryName")} style={{fontSize: '24px'}} color='orange' />
+                {loadingInitial ? (
+                        <>
+                            <DishListItemPlaceholder />
+                            <DishListItemPlaceholder />
+                            <DishListItemPlaceholder />
+                        </>
+                    ) : <DishList />}
+            </Grid.Column>
+            <Grid.Column width='2'>
+            <Button 
+                as={Link} 
+                to={`/createDish`} 
+                color='brown' 
+                floated='right' 
+                content='New dish' />  
+            </Grid.Column>
+        </Grid>
     )
 })

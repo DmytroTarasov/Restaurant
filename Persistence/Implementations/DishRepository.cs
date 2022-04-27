@@ -12,6 +12,14 @@ namespace Persistence.Implementations
     {
         public DishRepository(DataContext context) : base(context) { }
 
+        public async Task<IEnumerable<Dish>> GetAllDishesWithPortions()
+        {
+            return await Context.Dishes
+                .Include(d => d.Portions)
+                .Include(d => d.Photo)
+                .ToListAsync();
+        }
+
         // public async Task<IEnumerable<Dish>> GetAllDishesWithCategory()
         // {
         //     return await Context.Dishes.Include(d => d.Category).ToListAsync();

@@ -12,7 +12,9 @@ namespace Application.Dishes
 {
     public class List
     {
-        public class Query : IRequest<Result<List<DishDTO<Guid>>>> {}
+        public class Query : IRequest<Result<List<DishDTO<Guid>>>> {
+            public DishParams Params { get; set; }
+        }
         public class Handler : IRequestHandler<Query, Result<List<DishDTO<Guid>>>>
         {
             private readonly IUnitOfWork _uof;
@@ -24,7 +26,21 @@ namespace Application.Dishes
             }
             public async Task<Result<List<DishDTO<Guid>>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var dishes = await _uof.DishRepository.GetAll();
+                IEnumerable<Dish> dishes = new List<Dish>();
+                if (request.Params.CategoryName != "All") {
+                    dishes = await _uof.CategoryRepository.GetAllCategoryDishes(request.Params.CategoryName);
+                }
+                else {
+                    dishes = await _uof.DishRepository.GetAllDishesWithPortions();
+                }
+
+                Console.WriteLine("---------------------");
+
+                foreach(var dish in dishes) {
+                    Console.WriteLine(dish.ToString());
+                }
+
+                Console.WriteLine("---------------------");
 
                 var dishesDTO = _mapper.Map<List<Dish>, List<DishDTO<Guid>>>(dishes.ToList());
 

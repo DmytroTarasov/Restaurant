@@ -19,9 +19,9 @@ namespace Persistence.Implementations
             DishRepository = dishRepository;
             CategoryRepository = categoryRepository;
         }
-        public async Task Complete()
+        public async Task<Boolean> Complete()
         {
-            await Context.SaveChangesAsync();
+            return await Context.SaveChangesAsync() > 0;
         }
         public async ValueTask DisposeAsync()
         {

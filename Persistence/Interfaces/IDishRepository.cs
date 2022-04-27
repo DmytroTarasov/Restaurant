@@ -8,5 +8,6 @@ namespace Persistence.Interfaces
 {
     public interface IDishRepository : IRepository<Dish, Guid>
     {
+        public Task<IEnumerable<Dish>> GetAllDishesWithPortions();
     }
 }
