@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Categories;
+using Application.Ingredients;
 using Application.Photos;
 using Application.Portions;
 
@@ -16,5 +17,6 @@ namespace Application.Dishes
         public CategoryDTO<Guid> Category { get; set; }
         public ICollection<PortionDTO<Guid>> Portions { get; set; }
         public PhotoDTO<string> Photo { get; set; }
+        public ICollection<IngredientDTO<Guid>> Ingredients { get; set; }
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Core;
+using Application.Interfaces;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Persistence;
 using Persistence.Interfaces;
 
@@ -25,11 +27,7 @@ namespace Application.Dishes
             }
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var category = await _uof.CategoryRepository.Get(request.Dish.Category.Id);
-                var dish = request.Dish;
-                dish.Category = category;
-
-                _uof.DishRepository.Add(dish);
+                _uof.DishRepository.AddDish(request.Dish);
                 var result = await _uof.Complete();
 
                 if (!result) return Result<Unit>.Failure("Failed to create a dish");

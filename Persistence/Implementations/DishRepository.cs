@@ -12,17 +12,20 @@ namespace Persistence.Implementations
     {
         public DishRepository(DataContext context) : base(context) { }
 
-        public async Task<IEnumerable<Dish>> GetAllDishesWithPortions()
+        public void AddDish(Dish dish)
+        {
+            Context.Entry(dish.Category).State = EntityState.Unchanged;
+            dish.Ingredients.ToList().ForEach(i => Context.Entry(i).State = EntityState.Unchanged);
+            Context.Dishes.Add(dish);
+        }
+
+        public async Task<IEnumerable<Dish>> GetAllDishesWithRelatedEntities()
         {
             return await Context.Dishes
                 .Include(d => d.Portions)
                 .Include(d => d.Photo)
+                .Include(d => d.Ingredients)
                 .ToListAsync();
         }
-
-        // public async Task<IEnumerable<Dish>> GetAllDishesWithCategory()
-        // {
-        //     return await Context.Dishes.Include(d => d.Category).ToListAsync();
-        // }
     }
 }

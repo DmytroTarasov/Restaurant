@@ -9,7 +9,6 @@ export default class DishStore {
     predicate = new Map().set("categoryName", "All");
     loadingCreate = false;
     // uploading = false;
-    cachedDishes = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -54,20 +53,17 @@ export default class DishStore {
             runInAction(() => {
                 this.dishes = this.sortDishesPortions(result);
                 this.loadingInitial = false;
-                this.cachedDishes = false;
             })
         } catch (error) {
             console.log(error);
             runInAction(() => {
                 this.loadingInitial = false
-                this.cachedDishes = false;
             });
         }
     }
 
     createDish = async (dish: DishFormValues) => {
         this.loadingCreate = true;
-        this.cachedDishes = true;
         try {
             // console.log(dish);
             await agent.Dishes.create(dish);
@@ -81,10 +77,7 @@ export default class DishStore {
     uploadPhoto = async (dish: Dish, file: Blob) => {
         // this.uploading = true;
         try {
-            const response = await agent.Dishes.uploadPhoto(dish.id, file);
-            runInAction(() => {
-                this.dishes.find(d => d.id === dish.id)!.photo = response.data;
-            })
+            await agent.Dishes.uploadPhoto(dish.id, file);
         } catch(error) {
             console.log(error);
             // runInAction(() => this.uploading = false);

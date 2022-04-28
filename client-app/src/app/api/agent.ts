@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Category } from "../models/category";
 import { Dish, DishFormValues } from "../models/dish";
+import { Ingredient } from "../models/ingredient";
 import { Photo } from "../models/photo";
 
 const sleep = (delay: number) => {
@@ -42,16 +43,21 @@ const Dishes = {
         return axios.post<Photo>(`dishes/${dishId}/addPhoto`, formData, {
             headers: {'Content-type': 'multipart/form-data'}
         })
-    },
+    }
 }
 
 const Categories = {
     list: () => requests.get<Category[]>('/categories'),
 }
 
+const Ingredients = {
+    list: () => requests.get<Ingredient[]>('/ingredients'),
+}
+
 const agent = {
     Dishes,
-    Categories
+    Categories,
+    Ingredients
 }
 
 export default agent;

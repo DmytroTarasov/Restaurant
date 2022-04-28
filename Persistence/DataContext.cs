@@ -14,6 +14,7 @@ namespace Persistence
         public DbSet<Category> Categories { get; set; }
         public DbSet<Portion> Portions { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
@@ -27,6 +28,10 @@ namespace Persistence
                 .HasOne(p => p.Dish)
                 .WithMany(d => d.Portions)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Dish>()
+                .HasMany(d => d.Ingredients)
+                .WithMany(i => i.Dishes);
         }
     }
 }

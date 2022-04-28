@@ -56,6 +56,7 @@ namespace API
 
             services.AddScoped<IDishRepository, DishRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(_config.GetSection("Cloudinary"));

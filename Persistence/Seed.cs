@@ -11,7 +11,7 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context)
         {
-            if (!context.Dishes.Any() && !context.Categories.Any())
+            if (!context.Dishes.Any() && !context.Categories.Any() && !context.Ingredients.Any())
             {
 
                 var categories = new List<Category>
@@ -62,6 +62,23 @@ namespace Persistence
                     },
                 };
 
+                var ingredients = new List<Ingredient> {
+                    new Ingredient { Name = "ingredient1"},
+                    new Ingredient { Name = "ingredient2"},
+                    new Ingredient { Name = "ingredient3"},
+                    new Ingredient { Name = "ingredient4"},
+                    new Ingredient { Name = "ingredient5"},
+                    new Ingredient { Name = "ingredient6"},
+                };
+
+                dishes[0].Ingredients.Add(ingredients[0]);
+                dishes[0].Ingredients.Add(ingredients[1]);
+                dishes[0].Ingredients.Add(ingredients[2]);
+
+                dishes[1].Ingredients.Add(ingredients[2]);
+                dishes[1].Ingredients.Add(ingredients[3]);
+                dishes[1].Ingredients.Add(ingredients[4]);
+
                 categories[0].Dishes.Add(dishes[0]);
                 categories[1].Dishes.Add(dishes[1]);
                 categories[2].Dishes.Add(dishes[2]);
@@ -75,6 +92,7 @@ namespace Persistence
                 portions[5].Dish = dishes[1];
 
                 await context.Categories.AddRangeAsync(categories);
+                await context.Ingredients.AddRangeAsync(ingredients);
                 await context.Dishes.AddRangeAsync(dishes);
                 await context.Portions.AddRangeAsync(portions);
                 await context.SaveChangesAsync();

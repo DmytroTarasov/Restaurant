@@ -12,12 +12,17 @@ namespace Persistence.Implementations
         public DataContext Context { get; }
         public IDishRepository DishRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
+        public IIngredientRepository IngredientRepository { get; set; }
 
-        public UnitOfWork(DataContext context, IDishRepository dishRepository, ICategoryRepository categoryRepository)
+        public UnitOfWork(DataContext context, 
+            IDishRepository dishRepository, 
+            ICategoryRepository categoryRepository,
+            IIngredientRepository ingredientRepository)
         {
             Context = context;
             DishRepository = dishRepository;
             CategoryRepository = categoryRepository;
+            IngredientRepository = ingredientRepository;
         }
         public async Task<Boolean> Complete()
         {

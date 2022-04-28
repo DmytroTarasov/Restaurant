@@ -18,8 +18,22 @@ export default function DishItem({dish}: Props) {
                     <Grid.Column width='11'>
                     <Item>
                         <Item.Content>
-                            <Item.Header as='h2' style={{color: '#a40606'}}>{dish.name}</Item.Header>
+                            {/* #a40606 */}
+                            <Item.Header as='h2' style={{marginTop: '10px', textAlign: 'center'}}>{dish.name}</Item.Header>
                             <Item.Description>{dish.description}</Item.Description>
+                            <Divider />
+                            <Item.Header as='h3' style={{marginTop: '10px'}}>Ingredients</Item.Header>
+                            <List>
+                                    { dish.ingredients.map(i => (
+                                        <List.Item
+                                            style={{fontSize: '16px'}}
+                                            key={i.id} >
+                                            <List.Content>
+                                                {i.name}
+                                            </List.Content>
+                                        </List.Item>
+                                    ))}
+                                </List>
                             <Divider />
                             <Item.Description>
                                 <Icon name='food' size='big' color='orange' style={{marginRight: '20px'}} />
@@ -35,10 +49,10 @@ export default function DishItem({dish}: Props) {
                                         </List.Item>
                                     )) }     
                                 </List>
-                                <Button 
+                                {/* <Button 
                                     color='brown' 
                                     floated='right' 
-                                    content='Edit' />        
+                                    content='Edit' />         */}
                             </Item.Description>
                         </Item.Content>
                     </Item>

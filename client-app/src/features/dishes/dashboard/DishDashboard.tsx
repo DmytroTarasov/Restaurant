@@ -10,12 +10,12 @@ import DishListItemPlaceholder from './DishListItemPlaceholder';
 
 export default observer(function ActivityDashboard() {
     const {dishStore, categoryStore} = useStore();
-    const {loadingInitial, loadDishes, predicate, cachedDishes} = dishStore;
+    const {loadingInitial, loadDishes, predicate} = dishStore;
     const {loadingCategories} = categoryStore;
 
     useEffect(() => {
-        if (!cachedDishes) loadDishes();
-    }, [loadDishes, cachedDishes])
+        loadDishes();
+    }, [loadDishes])
   
     if (loadingCategories) return <LoadingComponent content='Loading app...' />
 

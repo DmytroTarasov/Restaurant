@@ -1,4 +1,5 @@
 import { Category } from "./category";
+import { Ingredient } from "./ingredient";
 import { Photo } from "./photo";
 import { Portion } from "./portion";
 
@@ -9,6 +10,7 @@ export interface Dish {
     category: Category;
     portions: Portion[];
     photo?: Photo;
+    ingredients: Ingredient[];
 }
 
 export class Dish implements Dish {
@@ -23,6 +25,7 @@ export class DishFormValues {
     description: string = '';
     category: Category | string = ''; 
     portions: Portion[] = Array(3).fill(new Portion('', ''));
+    ingredients: Ingredient[] = Array(10).fill(new Ingredient(''));
 
     constructor(dish?: DishFormValues) {
         if (dish) {

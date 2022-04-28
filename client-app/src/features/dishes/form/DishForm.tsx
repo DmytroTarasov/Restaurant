@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Grid, Header, Segment } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from 'mobx-react-lite';
 import { useParams, useHistory } from "react-router-dom";
@@ -15,18 +15,20 @@ import { Dish, DishFormValues } from "../../../app/models/dish";
 import { Portion } from "../../../app/models/portion";
 import PhotoWidgetDropzone from "../../../app/common/imageUpload/PhotoWidgetDropzone";
 import PhotoWidgetCropper from "../../../app/common/imageUpload/PhotoWidgetCropper";
+import { Ingredient } from "../../../app/models/ingredient";
 
 export default observer(function DishForm() {
     const history = useHistory();
-    const {dishStore, categoryStore} = useStore();
-    const {createDish, loadingCreate, uploadPhoto, dishes} = dishStore;
+    const {dishStore, categoryStore, ingredientStore} = useStore();
+    const {createDish, uploadPhoto} = dishStore;
     const {formCategoryOptions, categoryOptions, 
         categories, loadCategories, loadingCategories} = categoryStore;
-    // const {id} = useParams<{id: string}>();
+    const {loadIngredients, ingredients, ingredientsOptions, formIngredientOptions} = ingredientStore
 
     const [dish, setDish] = useState<DishFormValues>(new DishFormValues());
     const [portions, setPortions] = useState<Portion[]>([]);
-    // const [blob, setBlob] = useState<Blob>();
+    const [loading, setLoading] = useState(false);
+    const [ingredientsLocal, setIngredientsLocal] = useState<Ingredient[]>([]);
 
     const [files, setFiles] = useState<any>([]);
     const [cropper, setCropper] = useState<Cropper>();
@@ -44,46 +46,60 @@ export default observer(function DishForm() {
 
     useEffect(() => {
         loadCategories().then(() => formCategoryOptions());
+        loadIngredients().then(() => formIngredientOptions());
         // return () => {
         //     // actually, invoke dispose() method for each file to clean up resources
         //     files.forEach((file: any) => URL.revokeObjectURL(file.preview))
         // }
-    }, [formCategoryOptions, loadCategories]);
+    }, [formCategoryOptions, loadCategories, formIngredientOptions, loadIngredients]);
 
     function handleFormSubmit(dish: DishFormValues) {
         if (!dish.id) { 
             let category = categories.find(c => c.name === dish.category)!!;
+            let newIngredients: Ingredient[] = [];
+            dish.ingredients.filter(i => !!i.name).forEach(ingredient => {
+                newIngredients.push(ingredients.find(i => i.name === ingredient.name)!!);
+            })
             let newDish = {
                 ...dish,
                 category,
                 portions: dish.portions.filter(p => !!p.price && !!p.size), // portions that are not empty
+                ingredients: newIngredients, // ingredients that are not empty
                 id: uuid()
             };
-            createDish(newDish).then(() => onCrop(newDish)).then(() => history.push('/dishes'));
+
+            // console.log(newDish);
+
+            setLoading(true);
+            createDish(newDish).then(() => onCrop(newDish)).then(() => setTimeout(() => {
+                history.push('/dishes');
+                setLoading(false);
+            }, 5000));
         } 
-        // else {
-        //     updateActivity(activity).then(() => history.push(`/activities/${activity.id}`))
-        // }
     }
 
     function handlePortionCreate() {
         setPortions([...portions, {size: '', price: ''}]);
     }
 
+    function handleIngredientCreate() {
+        setIngredientsLocal([...ingredientsLocal, {name: ''}]);
+    }
+
     if(loadingCategories) return <LoadingComponent content="Loading..."/>
 
     return (
         <Segment clearing>
-            <Header content='Dish Info' sub color='orange' style={{fontSize: '18px'}} />
+            <Header content='Dish Info' sub color='orange' style={{fontSize: '18px', marginBottom: '10px'}} />
             {/* widget start */}
             <Grid>
                 <Grid.Column width={4}>
-                    <Header sub color='teal' content='Step 1 - Add photo' />
+                    <Header sub color='orange' content='Add photo' style={{textAlign: 'center'}} />
                     <PhotoWidgetDropzone setFiles={setFiles} />
                 </Grid.Column>
                 <Grid.Column width={1} />
                 <Grid.Column width={4}>
-                    <Header sub color='teal' content='Step 2 - Resize image' />
+                    <Header sub color='orange' content='Resize photo' style={{textAlign: 'center'}} />
                     {files &&
                         files.length > 0 && (
                             <PhotoWidgetCropper setCropper={setCropper} imagePreview={files[0].preview}/>
@@ -92,7 +108,6 @@ export default observer(function DishForm() {
                 <Grid.Column width={1} />
             </Grid>
             {/* widget end */}
-            {/* <PhotoUploadWidget uploadPhoto={uploadPhoto} /> */}
             <Formik 
                 validationSchema={validationSchema}
                 enableReinitialize 
@@ -103,30 +118,39 @@ export default observer(function DishForm() {
                         <MyTextInput name='name' placeholder='Name' />
                         <MyTextArea name='description' placeholder='Description' rows={3} />
                         <MySelectInput options={categoryOptions} name='category' placeholder='Category' />
-                        <Header content='Portions' sub color='orange' style={{fontSize: '16px'}} />                  
-                        {portions.length !== 0 ? portions.map((portion, index) => (
+                        <Header content='Ingredients' sub color='orange' style={{fontSize: '16px', marginBottom: '10px'}} />  
+                        {ingredientsLocal && ingredientsLocal.map((ingredient, index) => (
                             <Fragment key={index}>
+                                <MySelectInput 
+                                    options={ingredientsOptions} 
+                                    name={`ingredients[${index}].name`} 
+                                    placeholder='Ingredient' />
+                            </Fragment>
+                        ))}
+                        <Button  
+                            type='button' 
+                            content='Add ingredient'
+                            color='orange'
+                            onClick={() => handleIngredientCreate()}
+                            style={{marginBottom: '20px'}} />       
+                        <Divider />
+                        <Header content='Portions' sub color='orange' style={{fontSize: '16px', marginBottom: '10px'}} />          
+                        {portions && portions.map((portion, index) => (
+                            <Fragment key={index}>
+                                <Header content={index + 1} color='orange' style={{fontSize: '14px'}} />
                                 <MyTextInput name={`portions[${index}].size`} placeholder='Size' />
                                 <MyTextInput name={`portions[${index}].price`} placeholder='Price' />
-                                <Button  
-                                    floated='left' 
-                                    type='button' 
-                                    content='Add portion'
-                                    color='orange'
-                                    onClick={() => handlePortionCreate()} 
-                                    style={{marginBottom: '20px'}}/>  
                             </Fragment>
-                        )) : (
-                            <Button  
-                                floated='left' 
-                                type='button' 
-                                content='Add portion'
-                                color='orange'
-                                onClick={() => handlePortionCreate()} /> 
-                        )}
+                        ))} 
+                        <Button  
+                            type='button' 
+                            content='Add portion'
+                            color='orange'
+                            onClick={() => handlePortionCreate()}
+                            style={{marginBottom: '20px'}} /> 
                         <Button 
-                            disabled={loadingCreate || !dirty || !isValid}
-                            loading={loadingCreate} 
+                            disabled={loading || !dirty || !isValid}
+                            loading={loading} 
                             floated='right' 
                             positive 
                             type='submit' 

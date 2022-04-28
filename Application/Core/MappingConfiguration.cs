@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Categories;
 using Application.Dishes;
+using Application.Ingredients;
 using Application.Photos;
 using Application.Portions;
 using AutoMapper;
@@ -19,6 +20,7 @@ namespace Application.Core
             CreateMap<Category, CategoryDTO<Guid>>();
             CreateMap<Portion, PortionDTO<Guid>>();
             CreateMap<Photo, PhotoDTO<string>>();
+            CreateMap<Ingredient, IngredientDTO<Guid>>();
         }
     }
 }

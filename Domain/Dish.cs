@@ -12,10 +12,6 @@ namespace Domain
         public Category Category { get; set; }
         public ICollection<Portion> Portions { get; set; } = new List<Portion>();
         public Photo Photo { get; set; }
-
-        public override string ToString()
-        {
-            return "Name: " + Name + ", Photo: " + Photo;
-        }
+        public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }
 }

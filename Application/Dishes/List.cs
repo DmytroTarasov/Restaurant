@@ -31,16 +31,8 @@ namespace Application.Dishes
                     dishes = await _uof.CategoryRepository.GetAllCategoryDishes(request.Params.CategoryName);
                 }
                 else {
-                    dishes = await _uof.DishRepository.GetAllDishesWithPortions();
+                    dishes = await _uof.DishRepository.GetAllDishesWithRelatedEntities();
                 }
-
-                Console.WriteLine("---------------------");
-
-                foreach(var dish in dishes) {
-                    Console.WriteLine(dish.ToString());
-                }
-
-                Console.WriteLine("---------------------");
 
                 var dishesDTO = _mapper.Map<List<Dish>, List<DishDTO<Guid>>>(dishes.ToList());
 
