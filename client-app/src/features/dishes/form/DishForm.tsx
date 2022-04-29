@@ -90,16 +90,16 @@ export default observer(function DishForm() {
 
     return (
         <Segment clearing>
-            <Header content='Dish Info' sub color='orange' style={{fontSize: '18px', marginBottom: '10px'}} />
+            <Header content='Dish Info' sub style={{fontSize: '18px', marginBottom: '10px', color: '#cb410b'}} />
             {/* widget start */}
             <Grid>
                 <Grid.Column width={4}>
-                    <Header sub color='orange' content='Add photo' style={{textAlign: 'center'}} />
+                    <Header sub content='Add photo' style={{textAlign: 'center', color: '#cb410b'}} />
                     <PhotoWidgetDropzone setFiles={setFiles} />
                 </Grid.Column>
                 <Grid.Column width={1} />
                 <Grid.Column width={4}>
-                    <Header sub color='orange' content='Resize photo' style={{textAlign: 'center'}} />
+                    <Header sub content='Resize photo' style={{textAlign: 'center', color: '#cb410b'}} />
                     {files &&
                         files.length > 0 && (
                             <PhotoWidgetCropper setCropper={setCropper} imagePreview={files[0].preview}/>
@@ -118,7 +118,7 @@ export default observer(function DishForm() {
                         <MyTextInput name='name' placeholder='Name' />
                         <MyTextArea name='description' placeholder='Description' rows={3} />
                         <MySelectInput options={categoryOptions} name='category' placeholder='Category' />
-                        <Header content='Ingredients' sub color='orange' style={{fontSize: '16px', marginBottom: '10px'}} />  
+                        <Header content='Ingredients' sub style={{fontSize: '16px', marginBottom: '10px', color: '#cb410b'}} />  
                         {ingredientsLocal && ingredientsLocal.map((ingredient, index) => (
                             <Fragment key={index}>
                                 <MySelectInput 
@@ -130,14 +130,13 @@ export default observer(function DishForm() {
                         <Button  
                             type='button' 
                             content='Add ingredient'
-                            color='orange'
                             onClick={() => handleIngredientCreate()}
-                            style={{marginBottom: '20px'}} />       
+                            style={{marginBottom: '20px', backgroundColor: '#cb410b', color: '#fff'}} />       
                         <Divider />
-                        <Header content='Portions' sub color='orange' style={{fontSize: '16px', marginBottom: '10px'}} />          
+                        <Header content='Portions' sub style={{fontSize: '16px', marginBottom: '10px', color: '#cb410b'}} />          
                         {portions && portions.map((portion, index) => (
                             <Fragment key={index}>
-                                <Header content={index + 1} color='orange' style={{fontSize: '14px'}} />
+                                <Header content={index + 1} style={{fontSize: '14px', color: '#cb410b'}} />
                                 <MyTextInput name={`portions[${index}].size`} placeholder='Size' />
                                 <MyTextInput name={`portions[${index}].price`} placeholder='Price' />
                             </Fragment>
@@ -145,17 +144,15 @@ export default observer(function DishForm() {
                         <Button  
                             type='button' 
                             content='Add portion'
-                            color='orange'
                             onClick={() => handlePortionCreate()}
-                            style={{marginBottom: '20px'}} /> 
+                            style={{marginBottom: '20px', backgroundColor: '#cb410b', color: '#fff'}} /> 
                         <Button 
                             disabled={loading || !dirty || !isValid}
                             loading={loading} 
                             floated='right' 
                             positive 
                             type='submit' 
-                            content='Submit' 
-                            color='orange' />
+                            content='Submit' />
                         <Button 
                             as={Link} 
                             to='/dishes' 

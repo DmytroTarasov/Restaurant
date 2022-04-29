@@ -22,7 +22,7 @@ export default observer(function ActivityDashboard() {
     return (
         <Grid>
             <Grid.Column width='14'>
-            <Header content={predicate.get("categoryName")} style={{fontSize: '24px'}} color='orange' />
+            <Header content={predicate.get("categoryName")} style={{fontSize: '24px', color: '#cb410b'}} />
                 {loadingInitial ? (
                         <>
                             <DishListItemPlaceholder />
@@ -37,7 +37,8 @@ export default observer(function ActivityDashboard() {
                 to={`/createDish`} 
                 color='brown' 
                 floated='right' 
-                content='New dish' />  
+                content='New dish'
+                width='100%' />  
             </Grid.Column>
         </Grid>
     )

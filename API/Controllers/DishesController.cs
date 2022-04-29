@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Application.Dishes;
 using Application.Photos;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     public class DishesController : BaseApiController
     {
         [HttpGet("{id}")]

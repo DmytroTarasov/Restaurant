@@ -1,12 +1,16 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Grid, Item, Segment, Image, Icon, Divider, List, Button } from "semantic-ui-react";
 import { Dish } from "../../../app/models/dish";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
     dish: Dish
 }
 
-export default function DishItem({dish}: Props) {
+export default observer(function DishItem({dish}: Props) {
+    const {userStore: {addShoppingCartItem}} = useStore();
+
     return (
         <Segment style={{border: '2px solid orange'}}>
             <Grid columns={2} stackable textAlign='justified'>
@@ -35,16 +39,28 @@ export default function DishItem({dish}: Props) {
                                     ))}
                                 </List>
                             <Divider />
-                            <Item.Description>
-                                <Icon name='food' size='big' color='orange' style={{marginRight: '20px'}} />
+                            <Item.Description style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                <Icon name='food' size='big' style={{marginRight: '20px', color: '#cb410b'}} />
                                 <List horizontal>
                                     { dish.portions.map(portion => (
                                         <List.Item 
-                                            style={{color: 'orange', fontWeight: '600', fontSize: '18px'}} 
+                                            style={{color: '#cb410b', fontWeight: '600', fontSize: '18px'}} 
                                             key={portion.id}>
                                             <List.Content>
-                                                <span style={{marginRight: '10px'}}>{portion.size} &ndash; {portion.price}$ </span>
-                                                <Icon name='shopping cart' size='large' color='orange' style={{marginRight: '10px'}}/>
+                                                <span>{portion.size} &ndash; {portion.price}$ </span>
+                                                <Button animated='fade' 
+                                                    style={{backgroundColor: 'transparent', padding: '0 10px'}}
+                                                    onClick={() => addShoppingCartItem(portion, dish)}>
+                                                    <Button.Content visible>
+                                                        <Icon 
+                                                            style={{display: 'block', marginBottom: '4px', color: '#cb410b'}}
+                                                            name='shop' 
+                                                            size='large' />
+                                                    </Button.Content>
+                                                    <Button.Content hidden>
+                                                        <div style={{color: '#cb410b', lineHeight: '8px', fontSize: '16px'}}>Try it</div>
+                                                    </Button.Content>
+                                                </Button>
                                             </List.Content>
                                         </List.Item>
                                     )) }     
@@ -61,4 +77,4 @@ export default function DishItem({dish}: Props) {
             </Grid>
         </Segment>
     )
-}
+})

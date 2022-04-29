@@ -3,6 +3,8 @@ import { Category } from "../models/category";
 import { Dish, DishFormValues } from "../models/dish";
 import { Ingredient } from "../models/ingredient";
 import { Photo } from "../models/photo";
+import { User, UserFormValues } from "../models/user";
+import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -11,6 +13,12 @@ const sleep = (delay: number) => {
 }
 
 axios.defaults.baseURL = 'http://localhost:5500/api';
+
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token) config.headers.Authorization = `Bearer ${token}`
+    return config;
+})
 
 axios.interceptors.response.use(async response => {
     try {
@@ -54,10 +62,17 @@ const Ingredients = {
     list: () => requests.get<Ingredient[]>('/ingredients'),
 }
 
+const Account = {
+    current: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
+}
+
 const agent = {
     Dishes,
     Categories,
-    Ingredients
+    Ingredients,
+    Account
 }
 
 export default agent;

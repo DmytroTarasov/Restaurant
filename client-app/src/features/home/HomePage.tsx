@@ -3,9 +3,11 @@ import { Container, Header, Segment, Image, Button } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import LoginForm from "../users/LoginForm";
+import RegisterForm from "../users/RegisterForm";
 
 export default observer(function HomePage() {
-    // const {userStore, modalStore} = useStore();
+    const {userStore, modalStore} = useStore();
     
     return (
         <Segment inverted textAlign='center' vertical className='masthead'>
@@ -16,19 +18,19 @@ export default observer(function HomePage() {
                         src='/assets/logo.png'
                         alt='logo' 
                         style={{marginBottom: '12px'}} />
-                        Reactivities
+                        Restaurant
                 </Header>
-                <>
+                {/* <>
                         <Header as='h2' inverted content='Welcome to the Restaurant' />
                         <Button as={Link} to='/dishes' size='huge' inverted>
                             Go to the Restaurant!
                         </Button>
-                </>
-                {/* {userStore.isLoggedIn ? (
+                </> */}
+                {userStore.isLoggedIn ? (
                     <>
-                        <Header as='h2' inverted content='Welcome to Reactivities' />
-                        <Button as={Link} to='/activities' size='huge' inverted>
-                            Go to Activities!
+                        <Header as='h2' inverted content='Welcome!' />
+                        <Button as={Link} to='/dishes' size='huge' inverted>
+                            Go to the restaurant!
                         </Button>
                     </>
                 ) : (
@@ -40,7 +42,7 @@ export default observer(function HomePage() {
                             Register!
                         </Button>
                     </>
-                )} */}
+                )}
             </Container>
         </Segment>
     )
