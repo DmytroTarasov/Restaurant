@@ -10,5 +10,6 @@ namespace Domain
         public string Size { get; set; }
         public int Price { get; set; }
         public Dish Dish { get; set; }
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

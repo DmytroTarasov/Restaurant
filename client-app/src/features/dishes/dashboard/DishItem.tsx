@@ -2,6 +2,8 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import { Grid, Item, Segment, Image, Icon, Divider, List, Button } from "semantic-ui-react";
 import { Dish } from "../../../app/models/dish";
+import { PortionOrder } from "../../../app/models/portionOrder";
+import { DishOrder } from "../../../app/stores/dishOrder";
 import { useStore } from "../../../app/stores/store";
 
 interface Props {
@@ -50,7 +52,9 @@ export default observer(function DishItem({dish}: Props) {
                                                 <span>{portion.size} &ndash; {portion.price}$ </span>
                                                 <Button animated='fade' 
                                                     style={{backgroundColor: 'transparent', padding: '0 10px'}}
-                                                    onClick={() => addShoppingCartItem(portion, dish)}>
+                                                    onClick={() => 
+                                                        addShoppingCartItem(new PortionOrder
+                                                            (portion.id!!, portion.size, portion.price, new DishOrder(dish.id, dish.name)))}>
                                                     <Button.Content visible>
                                                         <Icon 
                                                             style={{display: 'block', marginBottom: '4px', color: '#cb410b'}}

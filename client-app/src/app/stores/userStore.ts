@@ -1,14 +1,17 @@
+import { ConsoleLogger } from "@microsoft/signalr/dist/esm/Utils";
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
 import { Dish } from "../models/dish";
 import { Portion } from "../models/portion";
+import { PortionOrder } from "../models/portionOrder";
 import { User, UserFormValues } from "../models/user";
 import { store } from "./store";
 
 export default class UserStore {
     user: User | null = null;
-    shoppingCartItems: Portion[] = [];
+    // shoppingCartItems: Map<string, PortionOrder[]> = new Map<string, PortionOrder[]>();
+    shoppingCartItems: PortionOrder[] = [];
 
     constructor() {
         makeAutoObservable(this)
@@ -59,12 +62,33 @@ export default class UserStore {
         }
     }
 
-    addShoppingCartItem = (portion: Portion, dish: Dish) => {
-        portion.dish = dish;
+    // addShoppingCartItem = (portion: PortionOrder, dish: Dish) => {
+    //     // portion.dish = dish;
+    //     // this.shoppingCartItems.push(portion);
+    //     if (this.shoppingCartItems.has(dish.name)) {
+    //         this.shoppingCartItems.get(dish.name)?.push(portion);
+    //     } else {
+    //         this.shoppingCartItems.set(dish.name, [portion]);
+    //     }
+    // }
+
+    // removeShoppingCartItem = (portion: PortionOrder, dishName: string) => {
+    //     this.shoppingCartItems.set(dishName, this.shoppingCartItems.get(dishName)!!.filter(i => i.id !== portion.id));
+    // }
+
+    // getShoppingCartItems = (): PortionOrder[] => {
+    //     var items: PortionOrder[] = [];
+    //     this.shoppingCartItems.forEach((value, key) => {
+    //         items.push(...value);
+    //     });
+    //     // console.log(items);
+    //     return items;
+    // }
+    addShoppingCartItem = (portion: PortionOrder) => {
         this.shoppingCartItems.push(portion);
     }
 
-    removeShoppingCartItem = (portion: Portion) => {
-        this.shoppingCartItems = [...this.shoppingCartItems.filter(item => item.id !== portion.id)];
+    removeShoppingCartItem = (index: number) => {
+        this.shoppingCartItems.splice(index, 1);
     }
 }

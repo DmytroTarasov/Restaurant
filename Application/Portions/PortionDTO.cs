@@ -8,6 +8,7 @@ namespace Application.Portions
     public class PortionDTO<TKey>
     {
         public TKey Id { get; set; }
+        public string DishName { get; set; }
         public string Size { get; set; }
         public int Price { get; set; }
     }

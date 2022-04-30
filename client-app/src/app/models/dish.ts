@@ -24,7 +24,7 @@ export class DishFormValues {
     name: string = '';
     description: string = '';
     category: Category | string = ''; 
-    portions: Portion[] = Array(3).fill(new Portion('', ''));
+    portions: Portion[] = Array(3).fill(new Portion('', 0));
     ingredients: Ingredient[] = Array(10).fill(new Ingredient(''));
 
     constructor(dish?: DishFormValues) {

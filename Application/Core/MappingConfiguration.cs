@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Categories;
 using Application.Dishes;
 using Application.Ingredients;
+using Application.Orders;
 using Application.Photos;
 using Application.Portions;
 using AutoMapper;
@@ -18,9 +19,11 @@ namespace Application.Core
         {
             CreateMap<Dish, DishDTO<Guid>>();
             CreateMap<Category, CategoryDTO<Guid>>();
-            CreateMap<Portion, PortionDTO<Guid>>();
+            CreateMap<Portion, PortionDTO<Guid>>()
+                .ForMember(p => p.DishName, o => o.MapFrom(pp => pp.Dish.Name));
             CreateMap<Photo, PhotoDTO<string>>();
             CreateMap<Ingredient, IngredientDTO<Guid>>();
+            CreateMap<Order, OrderDTO<Guid>>();
         }
     }
 }

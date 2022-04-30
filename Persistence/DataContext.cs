@@ -16,6 +16,7 @@ namespace Persistence
         public DbSet<Portion> Portions { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
@@ -33,6 +34,10 @@ namespace Persistence
             builder.Entity<Dish>()
                 .HasMany(d => d.Ingredients)
                 .WithMany(i => i.Dishes);
+
+            builder.Entity<Portion>()
+                .HasMany(p => p.Orders)
+                .WithMany(o => o.Portions);
         }
     }
 }

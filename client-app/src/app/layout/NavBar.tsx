@@ -7,11 +7,13 @@ import ShoppingCart from "../../features/cart/ShoppingCart";
 
 export default observer(function NavBar() {
     const {categoryStore: {categories, loadCategories}, 
-        dishStore: {predicate, setPredicate}, userStore: {user, logout}} = useStore();
+        dishStore: {predicate, setPredicate}, userStore: {user, logout},
+        orderStore: {hubConnection, createHubConnection}} = useStore();
 
     useEffect(() => {
         if (categories.length < 1) loadCategories();
-    }, [loadCategories, categories]);
+        if (hubConnection == null ) createHubConnection();
+    }, [loadCategories, categories, hubConnection, createHubConnection]);
 
     return (
         <Menu inverted secondary fixed='top'>
@@ -33,6 +35,11 @@ export default observer(function NavBar() {
                             onClick={() => setPredicate(`${category.name}`)}/>
                     ))
                 }
+                <Menu.Item 
+                    content='Orders' 
+                    as={Link} 
+                    to='/orders'
+                    style={{marginLeft: '40px'}} />
                 <Menu.Item position='right'>
                     <Popup hoverable
                         position='bottom right'

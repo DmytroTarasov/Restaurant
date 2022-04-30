@@ -79,7 +79,7 @@ export default observer(function DishForm() {
     }
 
     function handlePortionCreate() {
-        setPortions([...portions, {size: '', price: ''}]);
+        setPortions([...portions, {size: '', price: 0}]);
     }
 
     function handleIngredientCreate() {
