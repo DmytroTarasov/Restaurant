@@ -91,4 +91,6 @@ export default class UserStore {
     removeShoppingCartItem = (index: number) => {
         this.shoppingCartItems.splice(index, 1);
     }
+
+    clearShoppingCartItems = () => this.shoppingCartItems = [];
 }

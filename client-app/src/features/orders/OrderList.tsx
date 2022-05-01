@@ -2,6 +2,7 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import { Divider, Grid, Header, Item, List, Segment } from "semantic-ui-react";
+import { formatDistanceToNow } from 'date-fns';
 
 export default observer(function OrderList() {
     const {orderStore: {orders}} = useStore();
@@ -23,6 +24,9 @@ export default observer(function OrderList() {
                                                 fontSize: '18px',
                                                 fontWeight: '600'}}>{index + 1}</span>
                                     </Item.Header>
+                                    <Item.Meta floated='right'>
+                                        {formatDistanceToNow(order.date!!)} ago
+                                    </Item.Meta>
                                     <Divider />
                                     <Item.Description>
                                         <List>
@@ -53,7 +57,7 @@ export default observer(function OrderList() {
                                             </Grid.Column>
                                             <Grid.Column>
                                             </Grid.Column>
-                                            <Grid.Column textAlign='center'>
+                                            <Grid.Column textAlign='center' style={{fontSize: '16px', fontWeight: 600}}>
                                                 {order.portions.map(p => p.price).reduce((prev, next) => prev + next)}$
                                             </Grid.Column>
                                         </Grid>

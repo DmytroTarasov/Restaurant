@@ -17,11 +17,14 @@ namespace Persistence
                     new User {DisplayName = "Bob", UserName = "bob", Email = "bob@gmail.com"},
                     new User {DisplayName = "Tom", UserName = "tom", Email = "tom@gmail.com"},
                     new User {DisplayName = "Dmytro", UserName = "dmytro", Email = "dmytro@gmail.com"},
+                    new User {DisplayName = "Admin", UserName = "admin", Email = "admin@gmail.com", IsAdmin = true},
+
                 };
                 // create users
                 await userManager.CreateAsync(users[0], "Bob1234$");
                 await userManager.CreateAsync(users[1], "Tom1234$");
                 await userManager.CreateAsync(users[2], "Dmytro1234$");
+                await userManager.CreateAsync(users[3], "Admin1234$");
 
             }
 

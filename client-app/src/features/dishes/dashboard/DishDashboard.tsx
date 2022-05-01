@@ -3,13 +3,12 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Grid, Header } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-// import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import DishList from './DishList';
 import DishListItemPlaceholder from './DishListItemPlaceholder';
 
 export default observer(function ActivityDashboard() {
-    const {dishStore, categoryStore} = useStore();
+    const {dishStore, categoryStore, userStore: {user}} = useStore();
     const {loadingInitial, loadDishes, predicate} = dishStore;
     const {loadingCategories} = categoryStore;
 
@@ -32,13 +31,13 @@ export default observer(function ActivityDashboard() {
                     ) : <DishList />}
             </Grid.Column>
             <Grid.Column width='2'>
-            <Button 
+            {user?.isAdmin ? (<Button 
                 as={Link} 
                 to={`/createDish`} 
                 color='brown' 
                 floated='right' 
                 content='New dish'
-                width='100%' />  
+                width='100%' />) : null }
             </Grid.Column>
         </Grid>
     )

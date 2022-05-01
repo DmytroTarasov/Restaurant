@@ -6,7 +6,7 @@ import { useStore } from "../../app/stores/store";
 
 export default observer(function ShoppingCart() {
     const {userStore: {shoppingCartItems, removeShoppingCartItem},
-        orderStore: {addOrder}} = useStore();
+        orderStore: {addOrder, loading}} = useStore();
 
     return (
         <Segment style={{width: '500px'}}>
@@ -44,6 +44,7 @@ export default observer(function ShoppingCart() {
                     color='green'
                     content='Confirm' 
                     disabled={shoppingCartItems.length === 0}
+                    loading={loading}
                     onClick={() => addOrder(new Order(shoppingCartItems))}/>
         </Segment>
     )

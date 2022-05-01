@@ -24,12 +24,14 @@ namespace API.Controllers
         }
         
         [HttpPost]
+        [Authorize(Policy = "IsAdmin")]
         public async Task<IActionResult> CreateDish([FromBody]Dish dish) {
             return HandleResult(await Mediator.Send(new Create.Command{ Dish = dish }));
         }
 
+        [Authorize(Policy = "IsAdmin")]
         [HttpPost("{id}/addPhoto")]
-        public async Task<IActionResult> Add([FromForm] AddDishPhoto.Command command, string id) {
+        public async Task<IActionResult> AddPhoto([FromForm] AddDishPhoto.Command command, string id) {
             command.DishId = Guid.Parse(id);
             return HandleResult(await Mediator.Send(command));
         }

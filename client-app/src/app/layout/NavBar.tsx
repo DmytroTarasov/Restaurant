@@ -18,28 +18,30 @@ export default observer(function NavBar() {
     return (
         <Menu inverted secondary fixed='top'>
             <Container>
-                <Menu.Item header>
+                <Menu.Item header as={Link} to='/'>
                     <img src="/assets/logo.png" alt="logo" style={{ marginRight: '10px' }} />
                     Restaurant
                 </Menu.Item>
-                <Menu.Item 
+                <Menu.Item  
+                    as={Link} to='/dishes'
                     content="All dishes"
                     active={predicate.has("All")} 
                     onClick={() => setPredicate("All")}/>
                 {
                     categories.map(category => (
                         <Menu.Item 
+                            as={Link} to='/dishes'
                             content={category.name} 
                             key={category.id} 
                             active={predicate.has(`${category.name}`)} 
                             onClick={() => setPredicate(`${category.name}`)}/>
                     ))
                 }
-                <Menu.Item 
+                {user?.isAdmin ? (<Menu.Item 
                     content='Orders' 
                     as={Link} 
                     to='/orders'
-                    style={{marginLeft: '40px'}} />
+                    style={{marginLeft: '40px'}} />) : null}
                 <Menu.Item position='right'>
                     <Popup hoverable
                         position='bottom right'

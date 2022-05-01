@@ -7,6 +7,7 @@ import { store } from "./store";
 export default class OrderStore {
     orders: OrderGet[] = [];
     hubConnection: HubConnection | null = null;
+    loading = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -24,15 +25,22 @@ export default class OrderStore {
         this.hubConnection.start()
             .catch(error => console.log('Error with establishing the connection: ', error));
         
-        this.hubConnection.on("LoadOrders", (orders: OrderGet[]) => {
-            // console.log(orders);
-            runInAction(() => this.orders = orders);
+        this.hubConnection.on("LoadOrders", (orders: OrderGet[]) => {;
+            runInAction(() => {
+                orders.forEach(order => {
+                    order.date = new Date(order.date!! + 'Z');
+                })
+                this.orders = orders
+            });
         })
 
         this.hubConnection.on("ReceiveOrder", (order: OrderGet) => {
-            console.log("Received order: " + order.user?.userName);
-            order.portions.forEach(p => console.log(p.dishName));
-            runInAction(() => this.orders.push(order));
+            // console.log("Received order: " + order.user?.userName);
+            // order.portions.forEach(p => console.log(p.dishName));
+            runInAction(() => {
+                order.date = new Date(order.date!!);
+                this.orders.push(order);
+            });
         })
     }
 
@@ -42,13 +50,15 @@ export default class OrderStore {
     }
 
     addOrder = async (order: Order) => {
-        // console.log(order);
+        this.loading = true;
         order.user = store.userStore.user!!;
-        // console.log(order);
         try {
-            await this.hubConnection?.invoke('SendOrder', order); 
+            await this.hubConnection?.invoke('SendOrder', order);
+            store.userStore.clearShoppingCartItems(); 
+            runInAction(() => this.loading = false);
         } catch (error) {
             console.log(error);
+            runInAction(() => this.loading = false);
         }
     }
 }

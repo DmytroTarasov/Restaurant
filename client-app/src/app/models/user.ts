@@ -2,6 +2,7 @@ export interface User {
     email: string;
     userName: string;
     displayName: string;
+    isAdmin: boolean;
     token: string;
 }
 

@@ -86,6 +86,7 @@ namespace API.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 DisplayName = user.DisplayName,
+                IsAdmin = user.IsAdmin,
                 Token = _tokenService.CreateToken(user),
                 Username = user.UserName 
             };

@@ -10,7 +10,7 @@ namespace Persistence.Interfaces
     {
         public Task<IEnumerable<Order>> GetAllOrdersWithRelatedEntities();
 
-        public Task<Order> GetByIdWithRelatedEntities(Guid id);
+        // public Task<Order> GetByIdWithRelatedEntities(Guid id);
         public void AddOrder(Order order);
     }
 }
