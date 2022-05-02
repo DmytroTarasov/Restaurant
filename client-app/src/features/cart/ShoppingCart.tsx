@@ -18,10 +18,10 @@ export default observer(function ShoppingCart() {
                         <Item>
                             <Item.Content>
                                 <Grid verticalAlign='middle'>
-                                    <Grid.Column width={3}>
+                                    <Grid.Column width={8} textAlign="left">
                                         <Item.Header as='h4' style={{color: '#cb410b'}}>{item.dish.name}</Item.Header>
                                     </Grid.Column>
-                                    <Grid.Column width={8}>
+                                    <Grid.Column width={3}>
                                         <span style={{color: '#cb410b'}}>{item.size}</span>
                                     </Grid.Column>
                                     <Grid.Column width={5}>

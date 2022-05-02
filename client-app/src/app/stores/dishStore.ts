@@ -1,14 +1,12 @@
 import { makeAutoObservable, reaction, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { Dish, DishFormValues } from '../models/dish';
-import { Portion } from '../models/portion';
 
 export default class DishStore {
     dishes: Dish[] = [];
     loadingInitial = false;
     predicate = new Map().set("categoryName", "All");
     loadingCreate = false;
-    // uploading = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -49,7 +47,6 @@ export default class DishStore {
         this.loadingInitial = true;
         try {
             const result = await agent.Dishes.list(this.axiosParams);
-            console.log(result);
             runInAction(() => {
                 this.dishes = this.sortDishesPortions(result);
                 this.loadingInitial = false;
@@ -65,7 +62,6 @@ export default class DishStore {
     createDish = async (dish: DishFormValues) => {
         this.loadingCreate = true;
         try {
-            // console.log(dish);
             await agent.Dishes.create(dish);
             runInAction(() => this.loadingCreate = false);
         } catch (error) {
@@ -75,12 +71,10 @@ export default class DishStore {
     }
 
     uploadPhoto = async (dish: Dish, file: Blob) => {
-        // this.uploading = true;
         try {
             await agent.Dishes.uploadPhoto(dish.id, file);
         } catch(error) {
             console.log(error);
-            // runInAction(() => this.uploading = false);
         }
     }
 }

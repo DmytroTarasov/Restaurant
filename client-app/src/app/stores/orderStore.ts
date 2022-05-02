@@ -35,8 +35,6 @@ export default class OrderStore {
         })
 
         this.hubConnection.on("ReceiveOrder", (order: OrderGet) => {
-            // console.log("Received order: " + order.user?.userName);
-            // order.portions.forEach(p => console.log(p.dishName));
             runInAction(() => {
                 order.date = new Date(order.date!!);
                 this.orders.push(order);
@@ -47,6 +45,7 @@ export default class OrderStore {
     stopHubConnection = () => {
         this.hubConnection?.stop().catch(error => 
             console.log('Error with stopping the connection: ', error));
+        this.hubConnection = null;
     }
 
     addOrder = async (order: Order) => {
