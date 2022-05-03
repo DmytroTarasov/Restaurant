@@ -11,11 +11,12 @@ namespace Persistence.Implementations
     public class OrderRepository : Repository<Order, Guid>, IOrderRepository
     {
         public OrderRepository(DataContext context) : base(context) {}
-        public void AddOrder(Order order)
+        public Order AddOrder(Order order)
         {
             Context.Entry(order.User).State = EntityState.Unchanged;
             order.Portions.ToList().ForEach(p => Context.Entry(p).State = EntityState.Unchanged);
             Context.Orders.Add(order);
+            return order;
         }
         public async Task<IEnumerable<Order>> GetAllOrdersWithRelatedEntities()
         {

@@ -25,7 +25,6 @@ namespace Application.Categories
             public async Task<Result<List<CategoryDTO<Guid>>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var categories = await _uof.CategoryRepository.GetAll();
-
                 var categoriesDTO = _mapper.Map<List<Category>, List<CategoryDTO<Guid>>>(categories.ToList());
 
                 return Result<List<CategoryDTO<Guid>>>.Success(categoriesDTO);

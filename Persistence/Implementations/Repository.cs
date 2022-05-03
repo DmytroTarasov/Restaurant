@@ -23,9 +23,10 @@ namespace Persistence.Implementations
         {
             return await Context.Set<TEntity>().ToListAsync();
         }
-        public void Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
+            return entity;
         }
         public void Remove(TEntity entity)
         {

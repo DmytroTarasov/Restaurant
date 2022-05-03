@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Persistence.Interfaces
 {
-    public interface IUnitOfWork : IAsyncDisposable
+    public interface IUnitOfWork : IDisposable
     {
+        public DataContext Context { get; }
         public IDishRepository DishRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; set; }
         public IIngredientRepository IngredientRepository { get; set; }

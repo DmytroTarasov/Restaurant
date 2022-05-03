@@ -9,6 +9,6 @@ namespace Persistence.Interfaces
     public interface IDishRepository : IRepository<Dish, Guid>
     {
         public Task<IEnumerable<Dish>> GetAllDishesWithRelatedEntities();
-        public void AddDish(Dish dish);
+        public Dish AddDish(Dish dish);
     }
 }
