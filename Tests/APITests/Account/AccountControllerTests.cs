@@ -94,17 +94,5 @@ namespace Tests.APITests.Account
 
             Assert.That(userDTO, Is.TypeOf<UserDTO>());
         }
-
-        // [TestCase("first@gmail.com")]
-        // public async Task RegisterUser_DuplicateEmail_ReturnsBadRequest(string email) {
-        //     // _users.ForEach(u => _userManager.Object.Users.Append(u));
-        //     await _userManager.Object.CreateAsync(new User { Email = "first@gmail.com"}, "first1234$");
-
-        //     var result = await _accountController.Register(new RegisterDTO { Email = email});
-
-        //     BadRequestObjectResult badRequestResult = result.Result as BadRequestObjectResult ;
-
-        //     Assert.That(badRequestResult, Is.TypeOf<BadRequestObjectResult>());
-        // }
     }
 }

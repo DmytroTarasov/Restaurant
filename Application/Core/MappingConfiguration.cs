@@ -24,6 +24,7 @@ namespace Application.Core
             CreateMap<Photo, PhotoDTO<string>>();
             CreateMap<Ingredient, IngredientDTO<Guid>>();
             CreateMap<Order, OrderDTO<Guid>>();
+            CreateMap<User, ProfileDTO<string>>();
         }
     }
 }

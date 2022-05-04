@@ -30,14 +30,10 @@ namespace Persistence.Implementations
         {
             return await Context.SaveChangesAsync() > 0;
         }
-        // public async ValueTask DisposeAsync()
-        // {
-        //     await Context.DisposeAsync(); // maybe, need a call to GC.SuppressFinalize(this)
-        // }
+
         public void Dispose()
         {
             Context.Dispose();
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -82,18 +82,5 @@ namespace Tests.Persistence
 
             Assert.IsNull(result);
         }
-
-        // [Test]
-        // public async Task GetAll_Categories_ReturnsCategories() {
-        //     var expectedResult = new List<Category> {_categoryOne, _categoryTwo};
-        //     _context.Database.EnsureDeleted();
-
-        //     _uof.Object.CategoryRepository.Add(_categoryOne);
-        //     _uof.Object.CategoryRepository.Add(_categoryTwo);
-        //     await _uof.Object.Complete();
-
-        //     var result = await _uof.Object.CategoryRepository.GetAll();
-        //     Assert.AreEqual(2, result.Count());
-        // }
     }
 }

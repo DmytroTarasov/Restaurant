@@ -25,12 +25,12 @@ export default class OrderStore {
         this.hubConnection.start()
             .catch(error => console.log('Error with establishing the connection: ', error));
         
-        this.hubConnection.on("LoadOrders", (orders: OrderGet[]) => {;
+        this.hubConnection.on("LoadOrders", (orders: OrderGet[]) => {
             runInAction(() => {
                 orders.forEach(order => {
-                    order.date = new Date(order.date!! + 'Z');
+                    order.date = new Date(order.date!!);
                 })
-                this.orders = orders
+                this.orders = orders;
             });
         })
 

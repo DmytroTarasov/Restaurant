@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Categories;
 using Application.Core;
-using AutoMapper;
 using Domain;
 using Moq;
 using NUnit.Framework;
@@ -45,10 +44,5 @@ namespace Tests.ApplicationTests
             Assert.IsTrue(result.IsSuccess);
             Assert.AreEqual(3, result.Value.Count);
         }
-
-        // [Test]
-        // public async Task TestMethod() {
-        //     Assert.That(_categories, Is.EquivalentTo(await _categoryRepository.Object.GetAll()));
-        // }
     }
 }

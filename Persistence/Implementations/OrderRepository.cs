@@ -27,16 +27,5 @@ namespace Persistence.Implementations
                 .OrderBy(x => x.Date)
                 .ToListAsync();
         }
-
-        // public async Task<Order> GetByIdWithRelatedEntities(Guid id)
-        // {
-        //     var order = await Context.Orders
-        //         .Include(o => o.User)
-        //         .Include(o => o.Portions)
-        //         .ThenInclude(p => p.Dish)
-        //         .FirstOrDefaultAsync(o => o.Id == id);
-
-        //     return order;
-        // }
     }
 }

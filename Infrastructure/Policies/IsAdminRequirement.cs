@@ -23,7 +23,7 @@ namespace Infrastructure.Policies
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsAdminRequirement requirement)
         {
-            var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier); // user Id
+            var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (userId == null) return Task.CompletedTask;
 
@@ -31,7 +31,7 @@ namespace Infrastructure.Policies
 
             if (user == null) return Task.CompletedTask;
 
-            if (user.IsAdmin) context.Succeed(requirement); // succeed flag of the context is set
+            if (user.IsAdmin) context.Succeed(requirement); 
 
             return Task.CompletedTask;
         }

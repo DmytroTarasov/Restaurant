@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
-    // need a refactor !!!
     public class Seed
     {
         public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
+            await context.SaveChangesAsync();
             if (!userManager.Users.Any()) {
                 var users = new List<User> {
                     new User {DisplayName = "Tom", UserName = "tom", Email = "tom@gmail.com"},

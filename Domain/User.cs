@@ -10,10 +10,5 @@ namespace Domain
     {
         public string DisplayName { get; set; }
         public bool IsAdmin { get; set; }
-
-        // public override string ToString()
-        // {
-        //     return "Email: " + Email + ", Id: " + Id + ", UserName: " + UserName;
-        // }
     }
 }

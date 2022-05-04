@@ -10,9 +10,7 @@ namespace Application.Orders
     public class OrderDTO<TKey>
     {
         public TKey Id { get; set; }
-        // public string Username { get; set; }
-        // public string DisplayName { get; set; }
-        public User User { get; set; } // not good
+        public ProfileDTO<string> User { get; set; }
         public ICollection<PortionDTO<Guid>> Portions { get; set; } = new List<PortionDTO<Guid>>();
         public DateTime Date { get; set; } = DateTime.UtcNow;
     }

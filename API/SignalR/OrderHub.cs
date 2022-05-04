@@ -15,8 +15,6 @@ namespace API.SignalR
         }
 
         public async Task SendOrder(Order order) {
-            // Console.WriteLine("ORDER: " + order);
-            // Console.WriteLine(order.User.DisplayName);
             var orderDTO = await _mediator.Send(new Create.Command { Order = order });
 
             await Clients.All.SendAsync("ReceiveOrder", orderDTO.Value);
