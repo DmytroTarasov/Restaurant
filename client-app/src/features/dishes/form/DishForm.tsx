@@ -74,7 +74,7 @@ export default observer(function DishForm() {
             createDish(newDish).then(() => onCrop(newDish)).then(() => setTimeout(() => {
                 history.push('/dishes');
                 setLoading(false);
-            }, 5000));
+            }, 7000));
         } 
     }
 

@@ -23,8 +23,8 @@ namespace API.Controllers
                 new Application.Dishes.List.Query { Params = dishParams }));
         }
         
-        [HttpPost]
         [Authorize(Policy = "IsAdmin")]
+        [HttpPost]
         public async Task<IActionResult> CreateDish([FromBody]Dish dish) {
             return HandleResult(await Mediator.Send(new Create.Command{ Dish = dish }));
         }

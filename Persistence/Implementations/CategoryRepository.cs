@@ -19,6 +19,7 @@ namespace Persistence.Implementations
                 .Include(d => d.Category)
                 .Include(d => d.Portions)
                 .Include(d => d.Photo)
+                .Include(d => d.Ingredients)
                 .Where(d => d.Category.Name == categoryName).ToListAsync();
         }
     }

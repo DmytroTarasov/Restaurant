@@ -61,12 +61,11 @@ namespace API.Controllers
                 UserName = registerDto.Username
             };
 
-            var result = await _userManager.CreateAsync(user, registerDto.Password);      
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
 
             if (result.Succeeded)
             {
-                var userFromDB = await _userManager.FindByEmailAsync(user.Email);
-                return CreateUserObject(userFromDB);
+                return CreateUserObject(user);
             }
 
             return BadRequest("Problem with registering a user");

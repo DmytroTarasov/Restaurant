@@ -36,10 +36,10 @@ export default observer(function HomePage() {
                 ) : (
                     <>
                         <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
-                            Login!
+                            Log in!
                         </Button>
                         <Button onClick={() => modalStore.openModal(<RegisterForm />)} size='huge' inverted>
-                            Register!
+                            Sign up!
                         </Button>
                     </>
                 )}
