@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Header, Segment, Image, Button, Icon } from "semantic-ui-react";
+import { Container, Header, Segment, Button, Icon } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
