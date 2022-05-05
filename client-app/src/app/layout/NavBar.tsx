@@ -19,8 +19,6 @@ export default observer(function NavBar() {
         <Menu inverted secondary fixed='top'>
             <Container>
                 <Menu.Item header as={Link} to='/'>
-                    {/* <img src="/assets/logo.png" alt="logo" style={{ marginRight: '10px' }} />
-                    Restaurant */}
                     <Icon name='food' size='large' style={{ marginRight: '10px' }}/>
                         Паляниця
                 </Menu.Item>

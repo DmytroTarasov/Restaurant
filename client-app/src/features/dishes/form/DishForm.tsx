@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Divider, Grid, Header, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from 'mobx-react-lite';
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { v4 as uuid } from 'uuid';
 import { Link } from "react-router-dom";
@@ -47,10 +47,6 @@ export default observer(function DishForm() {
     useEffect(() => {
         loadCategories().then(() => formCategoryOptions());
         loadIngredients().then(() => formIngredientOptions());
-        // return () => {
-        //     // actually, invoke dispose() method for each file to clean up resources
-        //     files.forEach((file: any) => URL.revokeObjectURL(file.preview))
-        // }
     }, [formCategoryOptions, loadCategories, formIngredientOptions, loadIngredients]);
 
     function handleFormSubmit(dish: DishFormValues) {
@@ -67,8 +63,6 @@ export default observer(function DishForm() {
                 ingredients: newIngredients, // ingredients that are not empty
                 id: uuid()
             };
-
-            // console.log(newDish);
 
             setLoading(true);
             createDish(newDish).then(() => onCrop(newDish)).then(() => setTimeout(() => {

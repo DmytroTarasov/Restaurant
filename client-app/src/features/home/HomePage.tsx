@@ -13,20 +13,10 @@ export default observer(function HomePage() {
         <Segment inverted textAlign='center' vertical className='masthead'>
             <Container text>
                 <Header as='h1' inverted> 
-                    {/* <Image 
-                        size='massive' 
-                        src='/assets/logo.png'
-                        alt='logo' 
-                        style={{marginBottom: '12px'}} /> */}
                     <Icon name='food' />
                         Паляниця
                 </Header>
-                {/* <>
-                        <Header as='h2' inverted content='Welcome to the Restaurant' />
-                        <Button as={Link} to='/dishes' size='huge' inverted>
-                            Go to the Restaurant!
-                        </Button>
-                </> */}
+
                 {userStore.isLoggedIn ? (
                     <>
                         <Header as='h2' inverted content='Welcome!' />

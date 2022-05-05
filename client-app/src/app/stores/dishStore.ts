@@ -24,7 +24,6 @@ export default class DishStore {
     get axiosParams() {
         const params = new URLSearchParams();
         this.predicate.forEach((value, key) => params.append(key, value));
-        // params.append("categoryName", "Pizza");
         return params;
     }
 

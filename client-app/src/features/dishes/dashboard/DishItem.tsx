@@ -69,10 +69,6 @@ export default observer(function DishItem({dish}: Props) {
                                         </List.Item>
                                     )) }     
                                 </List>
-                                {/* <Button 
-                                    color='brown' 
-                                    floated='right' 
-                                    content='Edit' />         */}
                             </Item.Description>
                         </Item.Content>
                     </Item>

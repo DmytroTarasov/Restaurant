@@ -9,7 +9,6 @@ interface Props {
     type?: string;
 }
  
-// create our own reusable text field
 export default function MyTextInput(props: Props) {
     const [field, meta] = useField(props.name);
     return (

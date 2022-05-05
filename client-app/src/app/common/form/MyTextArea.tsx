@@ -9,7 +9,6 @@ interface Props {
     label?: string;
 }
  
-// create our own reusable text area
 export default function MyTextArea(props: Props) {
     const [field, meta] = useField(props.name);
     return (
