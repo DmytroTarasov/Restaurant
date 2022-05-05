@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Header, Segment, Image, Button } from "semantic-ui-react";
+import { Container, Header, Segment, Image, Button, Icon } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
@@ -13,12 +13,13 @@ export default observer(function HomePage() {
         <Segment inverted textAlign='center' vertical className='masthead'>
             <Container text>
                 <Header as='h1' inverted> 
-                    <Image 
+                    {/* <Image 
                         size='massive' 
                         src='/assets/logo.png'
                         alt='logo' 
-                        style={{marginBottom: '12px'}} />
-                        Restaurant
+                        style={{marginBottom: '12px'}} /> */}
+                    <Icon name='food' />
+                        Паляниця
                 </Header>
                 {/* <>
                         <Header as='h2' inverted content='Welcome to the Restaurant' />
